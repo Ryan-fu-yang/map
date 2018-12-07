@@ -88,14 +88,15 @@ map_t *map_next(rb_node_t *node) {
     return rb_entry(next, map_t, node);
 }
 
-void map_free(map_t *node){
+void map_free(map_t *node,root_t *tree){
     if (node != NULL) {
+        rb_erase(&node->node,tree);
         if (node->key != NULL) {
             free(node->key);
             node->key = NULL;
             free(node->val);
             node->val = NULL;
-    }
+        }
         free(node);
         node = NULL;
     }
